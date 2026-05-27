@@ -43,7 +43,7 @@ const initialState: UsersState = {
 	deleteError: null,
 };
 
-const API_URL = 'http://localhost:8000/users';
+const API_URL = 'https://fastapi-backend-89xk.onrender.com/users';
 
 // Thunks
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, { rejectWithValue }) => {

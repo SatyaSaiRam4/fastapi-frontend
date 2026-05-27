@@ -50,13 +50,13 @@ const initialState: ItemsState = {
   deleteError: null,
 };
 
-const API_URL = 'http://localhost:8000/items';
+const API_URL = 'https://fastapi-backend-89xk.onrender.com/items';
 
 export const fetchItems = createAsyncThunk('items/fetchItems', async (_, { rejectWithValue }) => {
   try {
     const res = await axios.get<Item[]>(API_URL);
     return res.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       return rejectWithValue(err.response?.data?.detail || 'Failed to fetch items');
     }
@@ -77,7 +77,7 @@ export const addItem = createAsyncThunk('items/addItem', async (item: ItemCreate
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return res.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       return rejectWithValue(err.response?.data?.detail || 'Failed to add item');
     }
@@ -98,7 +98,7 @@ export const updateItem = createAsyncThunk('items/updateItem', async ({ id, data
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return res.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       return rejectWithValue(err.response?.data?.detail || 'Failed to update item');
     }
@@ -110,7 +110,7 @@ export const deleteItem = createAsyncThunk('items/deleteItem', async (id: number
   try {
     await axios.delete(`${API_URL}/${id}`);
     return id;
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       return rejectWithValue(err.response?.data?.detail || 'Failed to delete item');
     }
