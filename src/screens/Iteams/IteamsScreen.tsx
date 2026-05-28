@@ -57,16 +57,45 @@ const getColumns = (
     key: "description",
   },
 
+  // FILE COLUMN
   {
     title: "Files",
-    dataIndex: "files",
     key: "files",
+
+    render: (record: Item) =>
+      record.files ? (
+        <a
+          href={record.files}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Download File
+        </a>
+      ) : (
+        "-"
+      ),
   },
 
+  // IMAGE COLUMN
   {
     title: "Images",
-    dataIndex: "images",
     key: "images",
+
+    render: (record: Item) =>
+      record.images ? (
+        <img
+          src={record.images}
+          alt="item"
+          style={{
+            width: 60,
+            height: 60,
+            objectFit: "cover",
+            borderRadius: 8,
+          }}
+        />
+      ) : (
+        "-"
+      ),
   },
 
   {
@@ -74,7 +103,7 @@ const getColumns = (
 
     key: "actions",
 
-    render: ( record: Item) => (
+    render: (record: Item) => (
       <Space>
 
         <Button
@@ -171,9 +200,6 @@ const IteamsScreen: React.FC = () => {
 
 
 
-    // IMPORTANT
-    // set values AFTER modal opens
-
     setTimeout(() => {
 
       form.setFieldsValue({
@@ -184,8 +210,6 @@ const IteamsScreen: React.FC = () => {
       });
 
 
-
-      // CLEAR OLD ERRORS
 
       form.setFields([
         {
@@ -208,8 +232,9 @@ const IteamsScreen: React.FC = () => {
           ? [
               {
                 uid: "-1",
-                name: item.files,
+                name: "Uploaded File",
                 status: "done",
+                url: item.files,
               },
             ]
           : []
@@ -224,8 +249,9 @@ const IteamsScreen: React.FC = () => {
           ? [
               {
                 uid: "-2",
-                name: item.images,
+                name: "Uploaded Image",
                 status: "done",
+                url: item.images,
               },
             ]
           : []
@@ -293,8 +319,6 @@ const IteamsScreen: React.FC = () => {
       const values = await form.validateFields();
 
 
-
-      // CLEAR ERRORS MANUALLY
 
       form.setFields([
         {
@@ -384,8 +408,6 @@ const IteamsScreen: React.FC = () => {
       }
 
 
-
-      // RESET EVERYTHING
 
       form.resetFields();
 
